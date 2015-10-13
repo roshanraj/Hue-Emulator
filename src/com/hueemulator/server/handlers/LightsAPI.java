@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -69,6 +70,29 @@ public class LightsAPI {
     }
 
     
+    public String fakeMac()
+    {
+    	String[] Mac = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
+        Random rd = new Random();
+        rd.nextInt(15);
+        String result="";
+
+        for(int i=0;i<7;i++)
+        {
+            String a = Mac[rd.nextInt(15)];
+            String b = Mac[rd.nextInt(15)];
+            result+=a+b;
+            if(i<6)
+            {
+                result+=":";
+            }
+            
+
+        }
+        	result += ":"+Mac[rd.nextInt(15)]+Mac[rd.nextInt(15)]+"-"+Mac[rd.nextInt(15)]+Mac[rd.nextInt(15)];
+        return result;
+    }
+    
     public JSONObject getLightJSON(PHLight light) {
         JSONObject lightJson = new JSONObject();
 
@@ -95,6 +119,7 @@ public class LightsAPI {
         lightJson.putOpt("type", light.getType());
         lightJson.putOpt("name", light.getName());
         lightJson.putOpt("swversion", light.getSwversion());
+        lightJson.putOpt("uniqueid", fakeMac());
         lightJson.putOpt("modelid", light.getModelid());
         lightJson.putOpt("pointsymbol", light.getPointsymbol());
         
